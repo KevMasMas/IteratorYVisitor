@@ -1,61 +1,25 @@
 package ud.iteratorvisitor;
 
+import javax.swing.JTextArea;
+
 public class NotificadorVisitor implements Visitor {
+    private JTextArea output;
+
+    public NotificadorVisitor(JTextArea output) {
+        this.output = output;
+    }
+
     @Override
     public void visitarEstudiante(Estudiante e) {
-        StringBuilder mensaje = new StringBuilder("[Notificación] Estudiante " + e.getCodigo() + ": ");
-
-        boolean incompleto = false;
-        if (e.getNombre() == null) {
-            mensaje.append("nombre faltante. ");
-            incompleto = true;
-        }
-        if (e.getDireccion() == null) {
-            mensaje.append("dirección faltante. ");
-            incompleto = true;
-        }
-        if (e.getTelefono() == null) {
-            mensaje.append("teléfono faltante. ");
-            incompleto = true;
-        }
-
-        // Validar longitud del código (11 dígitos para estudiantes)
-        if (!e.getCodigo().matches("\\d{11}")) {
-            mensaje.append("código inválido (debe tener 11 dígitos). ");
-            incompleto = true;
-        }
-
-        if (incompleto) {
-            System.out.println(mensaje.toString().trim());
-        }
+        if (e.getNombre() == null) output.append("[Notificación] Estudiante " + e.getCodigo() + ": falta el nombre\n");
+        if (e.getDireccion() == null) output.append("[Notificación] Estudiante " + e.getCodigo() + ": falta la dirección\n");
+        if (e.getTelefono() == null) output.append("[Notificación] Estudiante " + e.getCodigo() + ": falta el teléfono\n");
     }
 
     @Override
     public void visitarProfesor(Profesor p) {
-        StringBuilder mensaje = new StringBuilder("[Notificación] Profesor " + p.getCodigo() + ": ");
-
-        boolean incompleto = false;
-        if (p.getNombre() == null) {
-            mensaje.append("nombre faltante. ");
-            incompleto = true;
-        }
-        if (p.getDireccion() == null) {
-            mensaje.append("dirección faltante. ");
-            incompleto = true;
-        }
-        if (p.getTelefono() == null) {
-            mensaje.append("teléfono faltante. ");
-            incompleto = true;
-        }
-
-        // Validar código del profesor: debe tener 4 dígitos numéricos
-        if (!p.getCodigo().matches("\\d{4}")) {
-            mensaje.append("código inválido (debe tener exactamente 4 dígitos). ");
-            incompleto = true;
-        }
-
-        if (incompleto) {
-            System.out.println(mensaje.toString().trim());
-        }
+        if (p.getNombre() == null) output.append("[Notificación] Profesor " + p.getCodigo() + ": falta el nombre\n");
+        if (p.getDireccion() == null) output.append("[Notificación] Profesor " + p.getCodigo() + ": falta la dirección\n");
+        if (p.getTelefono() == null) output.append("[Notificación] Profesor " + p.getCodigo() + ": falta el teléfono\n");
     }
 }

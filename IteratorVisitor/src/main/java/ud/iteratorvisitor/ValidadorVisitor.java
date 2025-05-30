@@ -1,32 +1,27 @@
 package ud.iteratorvisitor;
 
+import javax.swing.JTextArea;
+
 
 public class ValidadorVisitor implements Visitor {
+    private JTextArea output;
+
+    public ValidadorVisitor(JTextArea output) {
+        this.output = output;
+    }
 
     @Override
     public void visitarEstudiante(Estudiante e) {
-        boolean datosIncompletos = e.getNombre() == null || e.getDireccion() == null || e.getTelefono() == null;
-        boolean codigoInvalido = e.getCodigo() == null || !e.getCodigo().matches("\\d{11}");
-
-        if (datosIncompletos || codigoInvalido) {
-            System.out.print("Estudiante " + e.getCodigo() + " tiene: ");
-            if (datosIncompletos) System.out.print("datos incompletos ");
-            if (codigoInvalido) System.out.print("código inválido (esperado 11 dígitos ej 20201020085)");
-            System.out.println();
-        }
+        if (e.getNombre() == null) output.append("Estudiante " + e.getCodigo() + " sin nombre\n");
+        if (e.getDireccion() == null) output.append("Estudiante " + e.getCodigo() + " sin dirección\n");
+        if (e.getTelefono() == null) output.append("Estudiante " + e.getCodigo() + " sin teléfono\n");
     }
 
     @Override
     public void visitarProfesor(Profesor p) {
-        boolean datosIncompletos = p.getNombre() == null || p.getDireccion() == null || p.getTelefono() == null;
-        boolean codigoInvalido = p.getCodigo() == null || !p.getCodigo().matches("\\d{4}");
-
-        if (datosIncompletos || codigoInvalido) {
-            System.out.print("Profesor " + p.getCodigo() + " tiene: ");
-            if (datosIncompletos) System.out.print("datos incompletos ");
-            if (codigoInvalido) System.out.print("código inválido (esperado 4 dígitos)");
-            System.out.println();
-        }
+        if (p.getNombre() == null) output.append("Profesor " + p.getCodigo() + " sin nombre\n");
+        if (p.getDireccion() == null) output.append("Profesor " + p.getCodigo() + " sin dirección\n");
+        if (p.getTelefono() == null) output.append("Profesor " + p.getCodigo() + " sin teléfono\n");
     }
 }
 

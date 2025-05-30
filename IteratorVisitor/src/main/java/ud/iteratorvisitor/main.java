@@ -1,36 +1,48 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ud.iteratorvisitor;
 
-/**
- *
- * @author USUARIO
- */
+import javax.swing.*;
+import java.awt.*;
+
 public class main {
     public static void main(String[] args) {
-        Visitor validador = new ValidadorVisitor();
-        Visitor notificador = new NotificadorVisitor();
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Validador y Notificador");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(600, 500);
 
-        ColeccionEstudiantes estudiantes = new ColeccionEstudiantes(
-            Colecciones.getEstudiantesArrayList(),
-            Colecciones.getEstudiantesTreeSet()
-        );
+            JTextArea textArea = new JTextArea();
+            textArea.setEditable(false);
+            JScrollPane scrollPane = new JScrollPane(textArea);
 
-        for (Estudiante e : estudiantes) {
-            e.aceptar(validador);
-            e.aceptar(notificador);
-        }
+            JButton procesarButton = new JButton("Procesar Datos");
+            procesarButton.addActionListener(e -> {
+                Visitor validador = new ValidadorVisitor(textArea);
+                Visitor notificador = new NotificadorVisitor(textArea);
 
-        ColeccionProfesores profesores = new ColeccionProfesores(
-            Colecciones.getProfesoresArrayList(),
-            Colecciones.getProfesoresTreeSet()
-        );
+                ColeccionEstudiantes estudiantes = new ColeccionEstudiantes(
+                        Colecciones.getEstudiantesArrayList(),
+                        Colecciones.getEstudiantesTreeSet()
+                );
+                for (Estudiante est : estudiantes) {
+                    est.aceptar(validador);
+                    est.aceptar(notificador);
+                }
 
-        for (Profesor p : profesores) {
-            p.aceptar(validador);
-            p.aceptar(notificador);
-        }
+                ColeccionProfesores profesores = new ColeccionProfesores(
+                        Colecciones.getProfesoresArrayList(),
+                        Colecciones.getProfesoresTreeSet()
+                );
+                for (Profesor prof : profesores) {
+                    prof.aceptar(validador);
+                    prof.aceptar(notificador);
+                }
+            });
+
+            frame.setLayout(new BorderLayout());
+            frame.add(scrollPane, BorderLayout.CENTER);
+            frame.add(procesarButton, BorderLayout.SOUTH);
+
+            frame.setVisible(true);
+        });
     }
 }
