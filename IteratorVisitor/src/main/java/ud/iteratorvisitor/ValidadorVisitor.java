@@ -5,23 +5,28 @@ public class ValidadorVisitor implements Visitor {
 
     @Override
     public void visitarEstudiante(Estudiante e) {
-        if (e.getCodigo().length() != 4) {
-            System.out.println("Estudiante con código inválido: " + e.getCodigo());
-        }
+        boolean datosIncompletos = e.getNombre() == null || e.getDireccion() == null || e.getTelefono() == null;
+        boolean codigoInvalido = e.getCodigo() == null || !e.getCodigo().matches("\\d{11}");
 
-        if (e.getNombre() == null || e.getDireccion() == null || e.getTelefono() == null || e.getTelefono().isEmpty()) {
-            System.out.println("Datos incompletos para el estudiante: " + e.getCodigo());
+        if (datosIncompletos || codigoInvalido) {
+            System.out.print("Estudiante " + e.getCodigo() + " tiene: ");
+            if (datosIncompletos) System.out.print("datos incompletos ");
+            if (codigoInvalido) System.out.print("código inválido (esperado 11 dígitos ej 20201020085)");
+            System.out.println();
         }
     }
 
     @Override
     public void visitarProfesor(Profesor p) {
-        if (p.getCodigo().length() != 4) {
-            System.out.println("Profesor con código inválido: " + p.getCodigo());
-        }
+        boolean datosIncompletos = p.getNombre() == null || p.getDireccion() == null || p.getTelefono() == null;
+        boolean codigoInvalido = p.getCodigo() == null || !p.getCodigo().matches("\\d{4}");
 
-        if (p.getNombre() == null || p.getDireccion() == null || p.getTelefono() == null || p.getTelefono().isEmpty()) {
-            System.out.println("Datos incompletos para el profesor: " + p.getCodigo());
+        if (datosIncompletos || codigoInvalido) {
+            System.out.print("Profesor " + p.getCodigo() + " tiene: ");
+            if (datosIncompletos) System.out.print("datos incompletos ");
+            if (codigoInvalido) System.out.print("código inválido (esperado 4 dígitos)");
+            System.out.println();
         }
     }
 }
+
