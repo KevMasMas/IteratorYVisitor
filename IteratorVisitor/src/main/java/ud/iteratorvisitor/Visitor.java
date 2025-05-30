@@ -11,4 +11,5 @@ package ud.iteratorvisitor;
 public interface Visitor {
     void visitarEstudiante(Estudiante e);
     void visitarProfesor(Profesor p);
+    
 }

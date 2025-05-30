@@ -18,5 +18,9 @@ public class Profesor extends Persona{
     public void aceptar(Visitor visitor) {
         visitor.visitarProfesor(this);
     }
+    public String getCodigo() {
+    return this.codigo;
+}
+
     
 }
